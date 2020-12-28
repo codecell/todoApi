@@ -6,10 +6,11 @@ const todoSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true
+    required: "This field is required"
   },
   completed: {
     type: Boolean,
+    default: false
   }
 });
 
