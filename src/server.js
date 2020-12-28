@@ -14,5 +14,10 @@ app.listen(3000, () => {
 
 app.get('/', (req, res) => {
   res.send('Welcome to the Todo Homepage!!!');
-})
+});
 app.use('/todos', todosController);
+
+// 404 route
+app.get('*', (req, res) => {
+  res.send('Oops not found !!!!');
+});

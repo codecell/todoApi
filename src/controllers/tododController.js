@@ -10,12 +10,10 @@ const internalServerError = (res, err) => {
   })
 }
 
+// intialize a new Todo contructor
 const Todo = mongoose.model('Todo');
 
-router.get('/', (req, res) => {
-  res.json('som yaay!!!')
-})
-
+// create a new todo
 router.post('/', (req, res) => {
   createTodo(req, res);
 });
@@ -41,7 +39,8 @@ const createTodo = async (req, res) => {
   }
 }
 
-router.get('/all', async (req, res) => {
+// View all todos
+router.get('/', async (req, res) => {
   try {
     const allTodos = await Todo.find();
     res.status(200).json({
