@@ -1,23 +1,7 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const router = express.Router();
+const { internalServerError, Todo } = require('../utils');
 
-// internal server errors
-const internalServerError = (res, err) => {
-  return res.status(500).json({
-    status: 'Error',
-    error: err.message
-  })
-}
 
-// intialize a new Todo contructor
-const Todo = mongoose.model('Todo');
-
-// create a new todo
-router.post('/', (req, res) => {
-  createTodo(req, res);
-});
-
+// New todo creator
 const createTodo = async (req, res) => {
   const { priority, description, completed } = req.body;
   const newTodoDetails = { priority, description, completed };
@@ -39,17 +23,23 @@ const createTodo = async (req, res) => {
   }
 }
 
-// View all todos
-router.get('/', async (req, res) => {
-  try {
-    const allTodos = await Todo.find();
-    res.status(200).json({
-      status: 'Sucess',
-      data: allTodos
-    })
+const updateTodo = async (req, res) => {
+  try { 
+      const { priority, description, completed } = req.body;
+
+      const updateValues = { priority, description, completed };
+      const updatedTodo = await Todo.findByIdAndUpdate(
+        req.params.id, updateValues, { new: true, useFindAndModify: false }
+      );
+
+    if(!updatedTodo) return res.status(404).send('Todo with given id not found');
+
+      return res.status(200).json({ status: 'success', message: 'Todo successfully updated', updatedTodo });
   } catch(err) {
     internalServerError(res, err);
   }
-});
+}
 
-module.exports = router;
+module.exports = {
+  updateTodo, createTodo
+}
