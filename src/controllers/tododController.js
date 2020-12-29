@@ -23,6 +23,7 @@ const createTodo = async (req, res) => {
   }
 }
 
+// Update todo controller
 const updateTodo = async (req, res) => {
   try { 
       const { priority, description, completed } = req.body;

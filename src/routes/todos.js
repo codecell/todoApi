@@ -7,7 +7,7 @@ const { internalServerError } = require('../utils');
 // intialize a new Todo constructor
 const Todo = mongoose.model('Todo');
 
-// create a new or update a todo
+// create a new a todo
 router.post('/', (req, res) => {  
   return createTodo(req, res);
 });
@@ -49,8 +49,10 @@ router.patch('/:id', (req, res) => updateTodo(req, res));
 // delete a specific todo
 router.delete('/:id', async (req, res) => {
   try {
-    const deleted = await Todo.findOneAndDelete(req.params.id, { useFindAndModify: false });
-    return res.status(200).json({status: 'Sucesss', message: 'Todo with ID ' + deleted._id + ' successfully deleted' });
+    const deletedTodo = await Todo.findOneAndDelete(req.params.id, { useFindAndModify: false });
+    return res.status(200).json(
+      { status: 'Sucesss', message: 'Todo with ID ' + deletedTodo._id + ' successfully deleted' }
+    );
   } catch(err) {
     internalServerError(res, err);
   }
