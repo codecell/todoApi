@@ -13,6 +13,7 @@ const createTodo = async (req, res) => {
       status: 'Success', 
       message: 'New Todo item successfully Added',
       data: {
+        id: newTodo._id,
         priority: newTodo.priority,
         description: newTodo.description,
         completed: newTodo.completed
