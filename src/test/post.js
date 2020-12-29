@@ -46,7 +46,7 @@ describe('POST /todos', () => {
       })
       .then(res => {
         const { body } = res;
-        console.log(body)
+
         try {
           expect(body.status).to.equal('Error');
           expect(body.error).to.match(/This field is required/i);

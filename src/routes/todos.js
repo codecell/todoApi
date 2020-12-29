@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
   try {
     const allTodos = await Todo.find();
     res.status(200).json({
-      status: 'Sucess',
+      status: 'Success',
       message: 'Showing ' + allTodos.length + ' todo items',
       data: allTodos
     })
